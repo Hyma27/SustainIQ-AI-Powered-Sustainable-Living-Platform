@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SustainIQ - AI-Powered Sustainable Living Platform</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  
+  <!-- Chart.js and Lucide Icons CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="dark-theme">
+  
+  <!-- Particle/Neon Glow Backgrounds -->
+  <div class="bg-glows">
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
+  </div>
+
+  <!-- Animated Achievement Toast Overlay -->
+  <div id="achievement-toast" class="achievement-toast hidden">
+    <div class="toast-glow"></div>
+    <div class="toast-content">
+      <div class="toast-badge-icon" id="toast-badge-icon">
+        <!-- SVG Badge will be inserted here -->
+      </div>
+      <div class="toast-text">
+        <span class="toast-label">Achievement Unlocked!</span>
+        <h4 class="toast-title" id="toast-badge-name">Green Pioneer</h4>
+        <p class="toast-desc" id="toast-badge-desc">You completed your first carbon calculation!</p>
+        <span class="toast-reward">+100 Eco Points</span>
+      </div>
+      <button class="toast-close" id="toast-close-btn">&times;</button>
+    </div>
+  </div>
+
+  <!-- App Shell Container -->
+  <div id="app-shell" class="app-shell hidden">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <div class="logo-icon">
+            <i data-lucide="leaf"></i>
+          </div>
+          <span class="logo-text">Sustain<span>IQ</span></span>
+        </div>
+      </div>
+      
+      <!-- User Profile Summary in Sidebar -->
+      <div class="sidebar-profile">
+        <div class="profile-avatar-wrapper">
+          <img src="https://api.dicebear.com/7.x/bottts/svg?seed=SustainIQUser" alt="Avatar" class="sidebar-avatar" id="sidebar-user-avatar">
+          <span class="online-indicator"></span>
+        </div>
+        <div class="profile-info">
+          <h4 id="sidebar-user-name">Guest User</h4>
+          <span class="badge badge-green" id="sidebar-user-rank">Eco Explorer</span>
+        </div>
+        <div class="sidebar-stats">
+          <div class="stat">
+            <span class="stat-label">Eco Points</span>
+            <span class="stat-val text-green" id="sidebar-user-points">1,250</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <span class="stat-label">CO2 Saved</span>
+            <span class="stat-val text-cyan" id="sidebar-user-saved">320 kg</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sidebar Nav Links -->
+      <nav class="sidebar-nav">
+        <ul>
+          <li><a href="#dashboard" class="nav-link active" data-page="dashboard"><i data-lucide="layout-dashboard"></i><span>Dashboard</span></a></li>
+          <li><a href="#calculator" class="nav-link" data-page="calculator"><i data-lucide="calculator"></i><span>Carbon Calculator</span></a></li>
+          <li><a href="#simulator" class="nav-link" data-page="simulator"><i data-lucide="sliders"></i><span>Impact Simulator</span></a></li>
+          <li><a href="#ai-assistant" class="nav-link" data-page="ai-assistant"><i data-lucide="message-square"></i><span>AI Assistant</span></a></li>
+          <li><a href="#challenges" class="nav-link" data-page="challenges"><i data-lucide="trophy"></i><span>Eco Challenges</span></a></li>
+          <li><a href="#prediction" class="nav-link" data-page="prediction"><i data-lucide="trending-up"></i><span>Carbon Prediction</span></a></li>
+          <li><a href="#goals" class="nav-link" data-page="goals"><i data-lucide="target"></i><span>Sustainability Goals</span></a></li>
+          <li><a href="#leaderboard" class="nav-link" data-page="leaderboard"><i data-lucide="award"></i><span>Leaderboard</span></a></li>
+          <li><a href="#learning-hub" class="nav-link" data-page="learning-hub"><i data-lucide="book-open"></i><span>Learning Hub</span></a></li>
+          <li><a href="#reports" class="nav-link" data-page="reports"><i data-lucide="bar-chart-3"></i><span>Reports & Analytics</span></a></li>
+          <li><a href="#profile" class="nav-link" data-page="profile"><i data-lucide="user"></i><span>My Profile</span></a></li>
+          <li><a href="#settings" class="nav-link" data-page="settings"><i data-lucide="settings"></i><span>Settings</span></a></li>
+        </ul>
+      </nav>
+      
+      <!-- Sidebar Footer -->
+      <div class="sidebar-footer">
+        <button id="logout-btn" class="btn btn-outline btn-block"><i data-lucide="log-out"></i> <span>Sign Out</span></button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top Navbar -->
+      <header class="top-navbar">
+        <div class="navbar-left">
+          <button id="sidebar-toggle" class="sidebar-toggle-btn"><i data-lucide="menu"></i></button>
+          <div class="search-bar">
+            <i data-lucide="search"></i>
+            <input type="text" id="global-search" placeholder="Search eco facts, carbon tips, recycling guides...">
+          </div>
+        </div>
+        <div class="navbar-right">
+          
+          <!-- Quick Mode Toggle -->
+          <button id="quick-theme-toggle" class="nav-action-btn" title="Toggle Theme">
+            <i data-lucide="sun" class="sun-icon"></i>
+            <i data-lucide="moon" class="moon-icon"></i>
+          </button>
+          
+          <!-- Notifications Center -->
+          <div class="notifications-dropdown">
+            <button id="notifications-toggle" class="nav-action-btn" title="Notifications">
+              <i data-lucide="bell"></i>
+              <span class="notification-badge hidden" id="noti-badge-dot"></span>
+            </button>
+            <div id="notifications-panel" class="notifications-panel hidden">
+              <div class="panel-header">
+                <h3>Notifications</h3>
+                <button id="clear-notifications" class="text-btn">Clear all</button>
+              </div>
+              <div class="panel-list" id="notifications-list">
+                <!-- Notifications populated by JS -->
+                <div class="empty-noti">No new notifications</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Mini Profile Widget -->
+          <div class="user-dropdown">
+            <div class="user-trigger" id="user-menu-trigger">
+              <img src="https://api.dicebear.com/7.x/bottts/svg?seed=SustainIQUser" alt="Avatar" class="nav-avatar" id="navbar-user-avatar">
+              <span class="user-trigger-name" id="navbar-user-name">Guest</span>
+              <i data-lucide="chevron-down"></i>
+            </div>
+            <div class="dropdown-menu hidden" id="user-dropdown-menu">
+              <a href="#profile"><i data-lucide="user"></i> Profile</a>
+              <a href="#settings"><i data-lucide="settings"></i> Settings</a>
+              <hr>
+              <a href="#" id="dropdown-logout"><i data-lucide="log-out"></i> Logout</a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Page Containers -->
+      <div class="content-body">
+        
+        <!-- DASHBOARD PAGE -->
+        <section id="dashboard" class="page-section active">
+          <div class="page-title-container">
+            <div>
+              <span class="page-subtitle">Overview</span>
+              <h1 class="page-title">SustainIQ Dashboard</h1>
+            </div>
+            <div class="date-picker-placeholder">
+              <i data-lucide="calendar"></i>
+              <span id="current-date-display">June 14, 2026</span>
+            </div>
+          </div>
+          
+          <!-- Quick Stats Row -->
+          <div class="stats-grid">
+            <div class="stat-card glass-panel card-glow-green">
+              <div class="card-icon icon-bg-green">
+                <i data-lucide="leaf"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Carbon Saved (Month)</span>
+                <h2 class="stat-value" id="dash-co2-saved">124.5 kg</h2>
+                <span class="stat-trend trend-up"><i data-lucide="arrow-up-right"></i> +12% vs last month</span>
+              </div>
+            </div>
+            <div class="stat-card glass-panel card-glow-emerald">
+              <div class="card-icon icon-bg-emerald">
+                <i data-lucide="trees"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Trees Equivalent Saved</span>
+                <h2 class="stat-value" id="dash-trees-saved">5.6 Trees</h2>
+                <span class="stat-trend trend-up"><i data-lucide="arrow-up-right"></i> Absorption active</span>
+              </div>
+            </div>
+            <div class="stat-card glass-panel card-glow-cyan">
+              <div class="card-icon icon-bg-cyan">
+                <i data-lucide="droplet"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Water Saved</span>
+                <h2 class="stat-value" id="dash-water-saved">1,820 L</h2>
+                <span class="stat-trend trend-up"><i data-lucide="arrow-up-right"></i> +8% shower efficiency</span>
+              </div>
+            </div>
+            <div class="stat-card glass-panel card-glow-yellow">
+              <div class="card-icon icon-bg-yellow">
+                <i data-lucide="zap"></i>
+              </div>
+              <div class="stat-info">
+                <span class="stat-label">Energy Saved</span>
+                <h2 class="stat-value" id="dash-energy-saved">340 kWh</h2>
+                <span class="stat-trend trend-up"><i data-lucide="arrow-up-right"></i> Smart appliances active</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Score Metrics and Analytics Charts -->
+          <div class="dashboard-row grid-2-1">
+            <div class="glass-panel main-chart-card">
+              <div class="card-header">
+                <h3>Weekly Progress (Emissions vs Baseline)</h3>
+                <span class="chart-legend"><span class="legend-color legend-green"></span> SustainIQ Tracker</span>
+              </div>
+              <div class="chart-container">
+                <canvas id="weeklyTrendChart"></canvas>
+              </div>
+            </div>
+            
+            <div class="glass-panel score-card flex-center">
+              <h3>Eco Sustainability Score</h3>
+              <div class="score-radial-wrapper">
+                <svg viewBox="0 0 100 100" class="score-svg">
+                  <circle cx="50" cy="50" r="40" class="score-bg-circle"></circle>
+                  <circle cx="50" cy="50" r="40" class="score-val-circle" id="score-meter-circle" stroke-dasharray="251.2" stroke-dashoffset="62.8"></circle>
+                </svg>
+                <div class="score-text">
+                  <span class="score-number" id="dash-sustain-score">75</span>
+                  <span class="score-label">Level 4</span>
+                </div>
+              </div>
+              <p class="score-verdict" id="dash-score-evaluation">Excellent! You're in the top 15% of sustainable users.</p>
+              <div class="mini-score-stats">
+                <div>
+                  <span class="mini-lbl">Eco Points</span>
+                  <span class="mini-val" id="dash-eco-points">1,250</span>
+                </div>
+                <div class="divider"></div>
+                <div>
+                  <span class="mini-lbl">CO2 Output</span>
+                  <span class="mini-val" id="dash-annual-footprint">3.6t/yr</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Row: Dynamic Activities & Badges -->
+          <div class="dashboard-row grid-1-1">
+            <div class="glass-panel">
+              <div class="card-header">
+                <h3>Recent Activities & Savings</h3>
+                <button class="text-btn" onclick="location.hash='#challenges'">View Challenges</button>
+              </div>
+              <ul class="activity-list" id="dash-activity-list">
+                <!-- Loaded from state -->
+              </ul>
+            </div>
+
+            <div class="glass-panel">
+              <div class="card-header">
+                <h3>Unlocked Achievements</h3>
+                <button class="text-btn" onclick="location.hash='#profile'">View Badges</button>
+              </div>
+              <div class="badges-row" id="dash-badges-row">
+                <!-- Loaded dynamically -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CARBON CALCULATOR PAGE -->
+        <section id="calculator" class="page-section">
+          <div class="page-title-container">
+            <div>
+              <span class="page-subtitle">Log Carbon Metrics</span>
+              <h1 class="page-title">Carbon Footprint Calculator</h1>
+            </div>
+          </div>
+          
+          <div class="grid-2-1">
+            <!-- Stepper Form -->
+            <div class="glass-panel calculator-form-container">
+              <div class="calc-tabs">
+                <button class="calc-tab active" data-step="1"><i data-lucide="car"></i> Transport</button>
+                <button class="calc-tab" data-step="2"><i data-lucide="zap"></i> Energy</button>
+                <button class="calc-tab" data-step="3"><i data-lucide="utensils"></i> Food</button>
+                <button class="calc-tab" data-step="4"><i data-lucide="trash-2"></i> Waste</button>
+              </div>
+              
+              <div class="calc-step active" id="calc-step-1">
+                <h3>Transportation Emissions</h3>
+                <div class="form-group">
+                  <label for="calc-vehicle-type">Primary vehicle type:</label>
+                  <select id="calc-vehicle-type" class="form-control">
+                    <option value="none">No Private Car (Public transit only)</option>
+                    <option value="petrol" selected>Petrol Car (Average)</option>
+                    <option value="diesel">Diesel Car</option>
+                    <option value="hybrid">Hybrid Vehicle</option>
+                    <option value="ev">Electric Vehicle (EV)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="calc-car-km">Weekly distance traveled (km):</label>
+                  <input type="number" id="calc-car-km" class="form-control" value="150" min="0">
+                </div>
+                <div class="form-group">
+                  <label for="calc-flights">Annual flights taken (hours total):</label>
+                  <input type="number" id="calc-flights" class="form-control" value="10" min="0">
+                </div>
+                <div class="form-group">
+                  <label for="calc-public-transit">Weekly public transit usage (hours):</label>
+                  <input type="number" id="calc-public-transit" class="form-control" value="5" min="0">
+                </div>
+              </div>
+
+              <div class="calc-step" id="calc-step-2">
+                <h3>Electricity & Household Energy</h3>
+                <div class="form-group">
+                  <label for="calc-electricity-kwh">Monthly electricity usage (kWh):</label>
+                  <input type="number" id="calc-electricity-kwh" class="form-control" value="300" min="0">
+                </div>
+                <div class="form-group">
+                  <label for="calc-green-energy">Clean / Renewable energy share (%):</label>
+                  <input type="range" id="calc-green-energy" class="form-control-range" value="20" min="0" max="100" oninput="this.nextElementSibling.value = this.value + '%'">
+                  <output class="range-value">20%</output>
+                </div>
+                <div class="form-group">
+                  <label for="calc-household-size">Number of household members:</label>
+                  <input type="number" id="calc-household-size" class="form-control" value="3" min="1">
+                </div>
+              </div>
+
+              <div class="calc-step" id="calc-step-3">
+                <h3>Food Consumption Diet</h3>
+                <div class="form-group">
+                  <label for="calc-diet">Primary nutritional profile:</label>
+                  <select id="calc-diet" class="form-control">
+                    <option value="heavy-meat">Heavy Meat Consumer</option>
+                    <option value="average-meat" selected>Average Meat Consumer</option>
+                    <option value="low-meat">Low Meat / Flexitarian</option>
+                    <option value="vegetarian">Vegetarian</option>
+                    <option value="vegan">Vegan</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="calc-food-waste">Estimated food waste generation (% of meals):</label>
+                  <select id="calc-food-waste" class="form-control">
+                    <option value="minimal" selected>Minimal (&lt; 5%)</option>
+                    <option value="average">Average (5% - 20%)</option>
+                    <option value="high">High (&gt; 20%)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="calc-step" id="calc-step-4">
+                <h3>Waste Production & Disposal</h3>
+                <div class="form-group">
+                  <label for="calc-waste-bags">Garbage bags thrown away per week (approx. 30L bags):</label>
+                  <input type="number" id="calc-waste-bags" class="form-control" value="2" min="0">
+                </div>
+                <div class="form-group">
+                  <label for="calc-recycling">Household recycling rate:</label>
+                  <select id="calc-recycling" class="form-control">
+                    <option value="none">No recycling</option>
+                    <option value="partial" selected>Partial recycling (Paper & plastic only)</option>
+                    <option value="high">High recycling / Composting active</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="calc-footer">
+                <button class="btn btn-outline" id="calc-prev-btn" style="visibility: hidden;">Back</button>
+                <button class="btn btn-primary" id="calc-next-btn">Next Step</button>
+              </div>
+            </div>
+
+            <!-- Real-time Preview and Breakdown -->
+            <div class="glass-panel calculator-results-card">
+              <h3>Live Footprint Breakdown</h3>
+              <div class="calc-result-metric">
+                <h1 id="calc-live-total">4.8</h1>
+                <span class="metric-unit">Metric Tons CO2e/year</span>
+              </div>
+              
+              <div class="chart-container">
+                <canvas id="calcBreakdownChart"></canvas>
+              </div>
+              
+              <div class="calc-actions">
+                <button id="calc-save-btn" class="btn btn-primary btn-block"><i data-lucide="save"></i> Save Assessment Data</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- GREEN IMPACT SIMULATOR PAGE -->
+        <section id="simulator" class="page-section">
+          <div class="page-title-container">
+            <div>
+              <span class="page-subtitle">Eco Action Sandbox</span>
+              <h1 class="page-title">Green Impact Simulator</h1>
+            </div>
+          </div>
+          
+          <div class="grid-2-1">
+            <div class="glass-panel">
+              <h3>Select Eco Actions to Simulate</h3>
+              <p class="description-text">Check action cards below to simulate the direct environmental and financial impact of switching your habits.</p>
+              
+              <div class="simulator-actions-list">
+                
+                <div class="sim-action-card glass-panel" data-action="electric-car">
+                  <div class="action-checkbox-wrapper">
+                    <input type="checkbox" id="sim-act-ev" class="sim-checkbox">
+                    <label for="sim-act-ev" class="custom-checkbox"></label>
+                  </div>
+                  <div class="action-info">
+                    <h4>Switch to Electric Vehicle (EV)</h4>
+                    <p>Replace daily travel emissions with clean power charging</p>
+                    <div class="action-impact-tags">
+                      <span class="tag tag-green"><i data-lucide="leaf"></i> -1,500 kg CO2/yr</span>
+                      <span class="tag tag-blue"><i data-lucide="dollar-sign"></i> Save $800/yr fuel</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="sim-action-card glass-panel" data-action="solar-panels">
+                  <div class="action-checkbox-wrapper">
+                    <input type="checkbox" id="sim-act-solar" class="sim-checkbox">
+                    <label for="sim-act-solar" class="custom-checkbox"></label>
+                  </div>
+                  <div class="action-info">
+                    <h4>Install Solar Panels</h4>
+                    <p>Power your home with clean, residential solar grid arrays</p>
+                    <div class="action-impact-tags">
+                      <span class="tag tag-green"><i data-lucide="leaf"></i> -1,200 kg CO2/yr</span>
+                      <span class="tag tag-blue"><i data-lucide="dollar-sign"></i> Save $600/yr bills</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="sim-action-card glass-panel" data-action="plant-diet">
+                  <div class="action-checkbox-wrapper">
+                    <input type="checkbox" id="sim-act-diet" class="sim-checkbox">
+                    <label for="sim-act-diet" class="custom-checkbox"></label>
+                  </div>
+                  <div class="action-info">
+                    <h4>Adopt Plant-Based Diet</h4>
+                    <p>Switch to vegan/vegetarian meals to eliminate livestock footprint</p>
+                    <div class="action-impact-tags">
+                      <span class="tag tag-green"><i data-lucide="leaf"></i> -800 kg CO2/yr</span>
+                      <span class="tag tag-blue"><i data-lucide="dollar-sign"></i> Save $300/yr food</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="sim-action-card glass-panel" data-action="zero-waste">
+                  <div class="action-checkbox-wrapper">
+                    <input type="checkbox" id="sim-act-waste" class="sim-checkbox">
+                    <label for="sim-act-waste" class="custom-checkbox"></label>
+                  </div>
+                  <div class="action-info">
+                    <h4>Zero Waste & Composting</h4>
+                    <p>Eliminate plastic containers, compost organic waste, and maximize recycling</p>
+                    <div class="action-impact-tags">
+                      <span class="tag tag-green"><i data-lucide="leaf"></i> -400 kg CO2/yr</span>
+                      <span class="tag tag-blue"><i data-lucide="dollar-sign"></i> Save $100/yr garbage</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Simulator Results -->
+            <div class="glass-panel simulator-visualizer">
+              <h3>Simulated Impact</h3>
+              
+              <div class="sim-savings-dashboard">
+                <div class="sim-save-card">
+                  <span class="lbl">CO2 Reduction</span>
+                  <h2 id="sim-co2-reduction">0 kg/year</h2>
+                </div>
+                <div class="sim-save-card">
+                  <span class="lbl">Cost Savings</span>
+                  <h2 id="sim-cost-savings">$0/year</h2>
+                </div>
+              </div>
+              
+              <div class="chart-container">
+                <canvas id="simulatorCompareChart"></canvas>
+              </div>
+              
+              <button class="btn btn-primary btn-block" id="sim-apply-btn" disabled>
+                <i data-lucide="target"></i> Add Selected as Active Goals
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- AI SUSTAINABILITY ASSISTANT PAGE -->
+        <section id="ai-assistant" class="page-section">
+          <div class="page-title-container">
+            <div>
+              <span class="page-subtitle">SustainAI Bot</span>
+              <h1 class="page-title">AI Sustainability Assistant</h1>
+            </div>
+          </div>
+          
+          <div class="ai-assistant-wrapper">
+            <!-- Left Panel: Tips & Suggestions -->
+            <div class="glass-panel ai-sidebar-panel">
+              <div class="tip-carousel-header">
+                <h3>Daily Sustainability Tip</h3>
+                <i data-lucide="sparkles" class="text-green animated-pulse"></i>
+              </div>
+              <div class="daily-tip-box" id="daily-tip-container">
+                <!-- Loaded from chatbot.js -->
+              </div>
+              <button class="btn btn-outline btn-block btn-sm" id="btn-next-tip">Next Tip</button>
+              
+              <hr class="panel-divider">
+              
+              <h3>Quick Suggestion Prompts</h3>
+              <div class="quick-prompts-grid">
+                <button class="quick-prompt-btn" data-query="How can I reduce food waste?">How do I reduce food waste?</button>
+                <button class="quick-prompt-btn" data-query="Suggest eco-friendly travel options.">Eco-friendly travel options?</button>
+                <button class="quick-prompt-btn" data-query="Explain how solar panels reduce my carbon score.">Explain solar panel impact</button>
+                <button class="quick-prompt-btn" data-query="Give me a zero-waste plan.">Zero-waste plan draft</button>
+              </div>
+            </div>
+
+            <!-- Right Panel: Chat interface -->
+            <div class="glass-panel ai-chat-panel">
+              <div class="chat-header">
+                <img src="https://api.dicebear.com/7.x/bottts/svg?seed=SustainAIBot" alt="Bot Avatar" class="chat-avatar">
+                <div>
+                  <h4>SustainAI</h4>
+                  <span class="status-online"><span class="dot"></span> Online - AI Eco Coach</span>
+                </div>
+              </div>
+              
+              <div class="chat-messages-container" id="chat-messages">
+                <!-- Simulated messages will appear here -->
+              </div>
+              
+              <div class="chat-input-wrapper">
+                <input type="text" id="chat-input-field" placeholder="Ask SustainAI about carbon reduction, recycling, composting...">
+                <button id="chat-send-btn" class="btn btn-primary"><i data-lucide="send"></i></button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ECO CHALLENGES PAGE -->
+        <section id="challenges" class="page-section">
+          <div class="page-title-container">
+            <div>
+              <span class="page-subtitle">Earn Points</span>
+              <h1 class="page-title">Eco Challenges</h1>
+            </div>
+          </div>
+          
+          <div class="challenges-tabs-container">
+            <div class="challenges-tab-triggers">
+              <button class="challenges-tab-btn active" data-tab="daily">Daily Challenges</button>
+              <button class="challenges-tab-btn" data-tab="weekly">Weekly Challenges</button>
+            </div>
+            
+            <!-- Daily Challenges -->
+            <div class="challenges-tab-content active" id="challenges-daily-tab">
+              <div class="challenges-grid" id="daily-challenges-container">
+                <!-- Loaded from state -->
+              </div>
+            </div>
+
+            <!-- Weekly Challenges -->
+            <div class="challenges-tab-content" id="challenges-weekly-tab">
+              <div class="challenges-grid" id="weekly-challenges-container">
+                <!-- Loaded from state -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CARBON EMISSION PREDICTION PAGE -->
+        <section id="prediction" class="page-section">
+          <div class="page-title-container">
+            <div>
+              <span class="page-subtitle">Emissions Forecast</span>
+              <h1 class="page-title">Carbon Emission Prediction</h1>
+            </div>
+          </div>
+          
+          <div class="grid-2-1">
+            <div class="glass-panel prediction-chart-card">
+              <div class="card-header">
+                <h3>6-Month Future Emission Forecast</h3>
+                <span class="chart-legend"><span class="legend-color legend-red"></span> Baseline Forecast</span>
+              </div>
+              <div class="chart-container">
+                <canvas id="predictionForecastChart"></canvas>
+              </div>
+            </div>
+            
+            <div class="glass-panel ai-prediction-insights">
+              <h3>AI Forecasting Insights</h3>
+              <div class="insight-status-header">
+                <i data-lucide="alert-triangle" class="text-yellow" id="predict-status-icon"></i>
+                <h4 id="predict-summary-heading">Trend Projection: Elevating</h4>
+              </div>
+              <p class="description-text" id="predict-summary-text">Based on your current 6-month historical average of 4.8t CO2e/year, you are on track to exceed global targets by 15%.</p>
+              
+              <hr class="panel-divider">
+              
+              <h4>Personalized Recommendations</h4>
+              <ul class="predicted-actions-list" id="prediction-recommendations-list">
+                <!-- JS populated -->
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- SUSTAINABILITY GOALS PAGE -->
+        <section id="goals" class="page-section">
+          <div class="page-title-container">
+            <div>
+              <span class="page-subtitle">Habit Builders</span>
+              <h1 class="page-title">Sustainability Goals</h1>
+            </div>
+          </div>
+          
+          <div class="grid-2-1">
+            <!-- List of active goals -->
+            <div class="glass-panel">
+              <div class="card-header">
+                <h3>Active Sustainability Goals</h3>
+              </div>
+              <div class="goals-list-container" id="active-goals-list">
+                <!-- JS populated goals -->
+              </div>
+            </div>
+
+            <!-- Goal creation panel -->
+            <div class="glass-panel goal-creation-card">
+              <h3>Set Custom Goal</h3>
+              <p class="description-text">Create custom milestones for carbon savings, energy cuts, or zero-waste habits.</p>
+              
+              <div class="form-group">
+                <label for="goal-title">Goal Title / Activity:</label>
+                <input type="text" id="goal-title" class="form-control" placeholder="e.g. Turn off standby power, Commute by foot">
+              </div>
+              
+              <div class="form-group">
+                <label for="goal-category">Emission Sector:</label>
+                <select id="goal-category" class="form-control">
+                  <option value="transport">Transportation</option>
+                  <option value="energy">Household Energy</option>
+                  <option value="food">Diet & Nutrition</option>
+                  <option value="waste">Waste Management</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="goal-timeframe">Target Timeframe:</label>
+                <select id="goal-timeframe" class="form-control">
+                  <option value="monthly">Monthly Goal</option>
+                  <option value="yearly">Yearly Goal</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="goal-target">Target Savings Count (e.g. 50 kg CO2 / 10 Commutes):</label>
+                <input type="number" id="goal-target" class="form-control" value="50" min="1">
+              </div>
+              
+              <button class="btn btn-primary btn-block" id="create-goal-btn"><i data-lucide="plus"></i> Add Goal</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- LEADERBOARD PAGE -->
+        <section id="leaderboard" class="page-section">
+          <div class="page-title-container">
+            <div>
+              <span class="page-subtitle">Rankings</span>
+              <h1 class="page-title">SustainIQ Leaderboard</h1>
+            </div>
+          </div>
+          
+          <div class="grid-2-1">
+            <!-- Global Leaderboard Table -->
+            <div class="glass-panel leaderboard-table-card">
+              <div class="card-header">
+                <h3>Eco Performance Standings</h3>
+                <div class="leaderboard-tabs">
+                  <button class="tab-btn active" data-range="global">Global</button>
+                  <button class="tab-btn" data-range="weekly">Weekly</button>
+                </div>
+              </div>
+              
+              <div class="table-responsive">
+                <table class="leaderboard-table">
+                  <thead>
+                    <tr>
+                      <th>Rank</th>
+                      <th>User</th>
+                      <th>Eco Score</th>
+                      <th>Badges</th>
+                      <th>Eco Points</th>
+                    </tr>
+                  </thead>
+                  <tbody id="leaderboard-entries">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Community Impact summary -->
+            <div class="glass-panel community-impact-panel">
+              <h3>Community Environmental Impact</h3>
+              <p class="description-text">Collective achievements logged by all SustainIQ platform members.</p>
+              
+              <div class="community-stats-grid">
+                <div class="community-stat-item glass-panel">
+                  <span class="label">Total CO2 Reduced</span>
+                  <h2 id="community-co2-total">1,425,820 kg</h2>
+                </div>
+                <div class="community-stat-item glass-panel">
+                  <span class="label">Challenges Completed</span>
+                  <h2 id="community-challenges-total">42,850</h2>
+                </div>
+                <div class="community-stat-item glass-panel">
+                  <span class="label">Trees Planted Equivalents</span>
+                  <h2 id="community-trees-total">64,810</h2>
+                </div>
+                <div class="community-stat-item glass-panel">
+                  <span class="label">Water Saved Platform-Wide</span>
+                  <h2 id="community-water-total">980,450 L</h2>
+                </div>
+              </div>
+              
+              <div class="leaderboard-spotlight glass-panel">
+                <h4>Weekly Champion Spotlight</h4>
+                <div class="spotlight-user">
+                  <img src="https://api.dicebear.com/7.x/bottts/svg?seed=EcoChampion" alt="Eco Champion avatar">
+                  <div>
+                    <h5>EcoSage_Sarah</h5>
+                    <span class="text-green">Score 99 | Sustainability Champion</span>
+                  </div>
+                </div>
+                <p>"Composted 100% of my waste this week and replaced car trips with biking. Small steps add up!"</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SUSTAINABILITY LEARNING HUB PAGE -->
+        <section id="learning-hub" class="page-section">
+          <div class="page-title-container">
+            <div>
+              <span class="page-subtitle">Educational Center</span>
+              <h1 class="page-title">Sustainability Learning Hub</h1>
+            </div>
+          </div>
+
+          <!-- Fact Carousel Header -->
+          <div class="glass-panel facts-carousel-card">
+            <div class="facts-icon">
+              <i data-lucide="help-circle"></i>
+            </div>
+            <div class="facts-content">
+              <h3>Did You Know?</h3>
+              <p id="learning-eco-fact" class="eco-fact-text">A single mature tree absorbs approximately 22 kilograms of carbon dioxide per year, helping to offset urban heating emissions.</p>
+              <button class="btn btn-outline btn-sm" id="next-eco-fact-btn">Next Eco Fact</button>
+            </div>
+          </div>
+
+          <!-- Quick Materials Recycle search -->
+          <div class="glass-panel recycling-search-card">
+            <h3>Recycling & Waste Guide Finder</h3>
+            <p class="description-text">Unsure of how to dispose of an item? Type or filter the material below to see exact washing and sorting instructions.</p>
+            
+            <div class="recycling-search-bar">
+              <i data-lucide="search"></i>
+              <input type="text" id="recycling-guide-search" placeholder="Type a material (e.g. PETE Plastic, Cardboard, Aluminum, Lightbulbs)...">
+            </div>
+            
+            <div class="recycling-results-grid" id="recycling-guide-results">
+              <!-- JS Populated -->
+            </div>
+          </div>
+
+          <!-- Static Guide Tabs -->
+          <div class="learning-guides-grid">
+            <div class="glass-panel guide-card">
+              <div class="card-icon icon-bg-yellow"><i data-lucide="zap"></i></div>
+              <h3>Energy Conservation</h3>
+              <p>Tips for minimizing domestic grids, appliance configuration, and smart HVAC controls.</p>
+              <ul class="guide-bullet-list">
+                <li>Configure programmable smart thermostats to shift temperature boundaries by 2°C.</li>
+                <li>Eliminate Phantom Load power drains by routing home theaters to smart power strips.</li>
+                <li>Convert low-efficiency halogen bulbs to high-output LED configurations.</li>
+              </ul>
+            </div>
+            <div class="glass-panel guide-card">
+              <div class="card-icon icon-bg-cyan"><i data-lucide="droplet"></i></div>
+              <h3>Water Stewardship</h3>
+              <p>Actionable methods for lowering urban home water withdrawals.</p>
+              <ul class="guide-bullet-list">
+                <li>Install low-flow aerators on kitchen and vanity faucets.</li>
+                <li>Shorten daily shower runtimes to under 5 minutes.</li>
+                <li>Install greywater recycling assemblies for lawn and landscape irrigation.</li>
+              </ul>
+            </div>
+            <div class="glass-panel guide-card">
+              <div class="card-icon icon-bg-green"><i data-lucide="refresh-cw"></i></div>
+              <h3>Zero-Waste & Composting</h3>
+              <p>Creating circular resource pathways at home.</p>
+              <ul class="guide-bullet-list">
+                <li>Adopt a rigorous double-bin kitchen separating organic compostables.</li>
+                <li>Utilize smart grocery planning lists to keep food spoilage below 5%.</li>
+                <li>Refuse single-use plastics in grocery bags, bottles, and storage containers.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- REPORTS & ANALYTICS PAGE -->
+        <section id="reports" class="page-section">
+          <div class="page-title-container">
+            <div>
+              <span class="page-subtitle">Data Exports</span>
+              <h1 class="page-title">Reports & Analytics</h1>
+            </div>
+          </div>
+          
+          <div class="reports-layout">
+            <div class="glass-panel printable-report-card" id="printable-report-area">
+              <div class="report-header-banner">
+                <div class="report-logo">
+                  <i data-lucide="leaf"></i>
+                  <span>SustainIQ Reports</span>
+                </div>
+                <div class="report-date" id="report-generated-date">June 14, 2026</div>
+              </div>
+              
+              <h2>Monthly Carbon Footprint & Progress Report</h2>
+              <p class="description-text">Comprehensive carbon logging statement and compliance summary with SustainIQ milestones.</p>
+              
+              <div class="report-metrics-summary">
+                <div class="rep-metric">
+                  <span class="lbl">Current Carbon Footprint</span>
+                  <h3 id="rep-total-footprint">4.8 t/yr</h3>
+                </div>
+                <div class="rep-metric">
+                  <span class="lbl">Category Grade</span>
+                  <h3 class="text-green" id="rep-total-grade">A-</h3>
+                </div>
+                <div class="rep-metric">
+                  <span class="lbl">Active Goals Complete</span>
+                  <h3 id="rep-goals-complete">85%</h3>
+                </div>
+              </div>
+
+              <h3>1. Breakdown of Emissions by Sector</h3>
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Emission Category</th>
+                    <th>Annual Contribution</th>
+                    <th>Percentage (%)</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="report-emissions-rows">
+                  <!-- JS Populated -->
+                </tbody>
+              </table>
+
+              <h3>2. Monthly Achievement Highlights</h3>
+              <ul class="report-highlights-list" id="report-achievements-list">
+                <!-- JS Populated -->
+              </ul>
+            </div>
+            
+            <!-- Controls panel -->
+            <div class="glass-panel reports-control-card">
+              <h3>Report Utilities</h3>
+              <p class="description-text">Print physical document copies or export raw carbon log spreadsheets.</p>
+              
+              <button class="btn btn-primary btn-block" id="print-report-btn">
+                <i data-lucide="printer"></i> Print / Save PDF
+              </button>
+              
+              <button class="btn btn-outline btn-block" id="download-csv-btn">
+                <i data-lucide="download"></i> Download CSV Statement
+              </button>
+              
+              <hr class="panel-divider">
+              
+              <h4>Export Meta-data</h4>
+              <p class="meta-tag-info"><strong>User Name:</strong> <span id="rep-info-username">Guest Explorer</span></p>
+              <p class="meta-tag-info"><strong>Platform Tier:</strong> Level 4 Carbon Saver</p>
+              <p class="meta-tag-info"><strong>Dataset Integrity:</strong> LocalStorage Sync Verified</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- USER PROFILE PAGE -->
+        <section id="profile" class="page-section">
+          <div class="page-title-container">
+            <div>
+              <span class="page-subtitle">My Identity</span>
+              <h1 class="page-title">User Profile</h1>
+            </div>
+          </div>
+          
+          <div class="grid-2-1">
+            <!-- Profile Info Card -->
+            <div class="glass-panel profile-main-card">
+              <div class="profile-header-layout">
+                <img src="https://api.dicebear.com/7.x/bottts/svg?seed=SustainIQUser" alt="Avatar" class="profile-lg-avatar" id="profile-avatar">
+                <div class="profile-lg-text">
+                  <h2 id="profile-display-name">Guest Explorer</h2>
+                  <p class="text-green" id="profile-tagline">Sustainability Champion</p>
+                  <span class="badge badge-green" id="profile-level">Level 4 Carbon Saver</span>
+                </div>
+              </div>
+              
+              <hr class="panel-divider">
+              
+              <h3>User Details</h3>
+              <div class="user-details-grid">
+                <div class="detail-box">
+                  <span class="lbl">Home Household Size</span>
+                  <span class="val" id="profile-house-size">3 Members</span>
+                </div>
+                <div class="detail-box">
+                  <span class="lbl">Primary Transit Mode</span>
+                  <span class="val" id="profile-transit-mode">Hybrid Electric</span>
+                </div>
+                <div class="detail-box">
+                  <span class="lbl">Eco Points Balance</span>
+                  <span class="val text-green" id="profile-points">1,250</span>
+                </div>
+                <div class="detail-box">
+                  <span class="lbl">Calculator Status</span>
+                  <span class="val text-cyan" id="profile-calc-date">Updated Today</span>
+                </div>
+              </div>
+              
+              <hr class="panel-divider">
+              
+              <h3>Eco Challenges Stats</h3>
+              <div class="profile-challenges-stats">
+                <div class="challenge-stat-dial">
+                  <div class="circular-progress-mini">
+                    <svg viewBox="0 0 36 36" class="circular-svg-mini">
+                      <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                      <path class="circle" id="profile-daily-challenges-dial" stroke-dasharray="80, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    </svg>
+                    <div class="dial-percentage" id="profile-daily-challenges-txt">80%</div>
+                  </div>
+                  <span class="dial-lbl">Daily Challenges</span>
+                </div>
+                <div class="challenge-stat-dial">
+                  <div class="circular-progress-mini">
+                    <svg viewBox="0 0 36 36" class="circular-svg-mini">
+                      <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                      <path class="circle" id="profile-weekly-challenges-dial" stroke-dasharray="60, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    </svg>
+                    <div class="dial-percentage" id="profile-weekly-challenges-txt">60%</div>
+                  </div>
+                  <span class="dial-lbl">Weekly Challenges</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Profile History and Badges -->
+            <div class="glass-panel profile-history-card">
+              <h3>Sustainability Score History</h3>
+              <div class="chart-container mini-chart">
+                <canvas id="scoreHistoryChart"></canvas>
+              </div>
+              
+              <hr class="panel-divider">
+              
+              <h3>Earned Badges</h3>
+              <div class="badges-showcase-grid" id="profile-badges-grid">
+                <!-- Loaded from state -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SETTINGS PAGE -->
+        <section id="settings" class="page-section">
+          <div class="page-title-container">
+            <div>
+              <span class="page-subtitle">Control Preferences</span>
+              <h1 class="page-title">Settings</h1>
+            </div>
+          </div>
+          
+          <div class="grid-2-1">
+            <div class="glass-panel">
+              <h3>App & Theme Settings</h3>
+              <p class="description-text">Personalize the appearance and functionality of the SustainIQ platform.</p>
+              
+              <div class="form-group-toggle">
+                <div>
+                  <h4>Light / Dark Theme Mode</h4>
+                  <p>Toggle the global app appearance style.</p>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="theme-mode-checkbox">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              
+              <hr class="panel-divider">
+              
+              <h3>System Preferences</h3>
+              <div class="form-group">
+                <label for="settings-units">Measurement Units:</label>
+                <select id="settings-units" class="form-control">
+                  <option value="metric" selected>Metric (kg, km, kWh)</option>
+                  <option value="imperial">Imperial (lbs, miles, kWh)</option>
+                </select>
+              </div>
+              
+              <hr class="panel-divider">
+              
+              <h3>Email & Alert Preferences</h3>
+              <div class="checkbox-group">
+                <div class="checkbox-item">
+                  <input type="checkbox" id="pref-challenge-notif" checked>
+                  <label for="pref-challenge-notif">New Eco-Challenge Alert Notifications</label>
+                </div>
+                <div class="checkbox-item">
+                  <input type="checkbox" id="pref-goal-notif" checked>
+                  <label for="pref-goal-notif">Goal Milestone Completion Emails</label>
+                </div>
+                <div class="checkbox-item">
+                  <input type="checkbox" id="pref-weekly-report" checked>
+                  <label for="pref-weekly-report">Weekly Carbon Statement Newsletter</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Danger Zone & Save -->
+            <div class="glass-panel settings-account-card">
+              <h3>Account Actions</h3>
+              <div class="form-group">
+                <label for="settings-username-input">Update Display Name:</label>
+                <input type="text" id="settings-username-input" class="form-control" value="Guest Explorer">
+              </div>
+              <button class="btn btn-primary btn-block" id="settings-save-btn"><i data-lucide="save"></i> Save Account Settings</button>
+              
+              <hr class="panel-divider">
+              
+              <div class="danger-zone">
+                <h3>Danger Zone</h3>
+                <p class="description-text">Reset all calculator entries, eco points, goals, and history from browser local storage.</p>
+                <button class="btn btn-danger btn-block" id="settings-reset-btn"><i data-lucide="trash-2"></i> Reset LocalStorage Cache</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- MAIN APP FOOTER -->
+      <footer class="app-footer">
+        <div class="footer-layout">
+          <div class="footer-about">
+            <div class="logo">
+              <i data-lucide="leaf" class="text-green"></i>
+              <span class="logo-text">Sustain<span>IQ</span></span>
+            </div>
+            <p class="mission-text">SustainIQ is a next-generation AI-powered green companion platform designed to raise awareness around environmental footprints. We help individuals optimize their habits, reduce energy consumption, and claim rewards for positive planet impact.</p>
+          </div>
+          <div class="footer-links">
+            <h4>SustainIQ Actions</h4>
+            <ul>
+              <li><a href="#calculator">Footprint Calculator</a></li>
+              <li><a href="#simulator">Impact Simulator</a></li>
+              <li><a href="#challenges">Weekly Challenges</a></li>
+              <li><a href="#learning-hub">Learning Center</a></li>
+            </ul>
+          </div>
+          <div class="footer-contact">
+            <h4>Contact & Socials</h4>
+            <p><i data-lucide="mail"></i> support@sustainiq.org</p>
+            <p><i data-lucide="globe"></i> www.sustainiq.org</p>
+            <div class="social-icons">
+              <a href="#" class="social-btn" title="GitHub"><i data-lucide="github"></i></a>
+              <a href="#" class="social-btn" title="Twitter"><i data-lucide="twitter"></i></a>
+              <a href="#" class="social-btn" title="Linkedin"><i data-lucide="linkedin"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-copyright">
+          &copy; 2026 SustainIQ Project. Created for PromptWars Challenge 3. All rights reserved.
+        </div>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- LANDING PAGE (VISUALLY STUNNING HERO) -->
+  <section id="landing" class="landing-page">
+    <div class="landing-header">
+      <div class="logo">
+        <i data-lucide="leaf"></i>
+        <span class="logo-text">Sustain<span>IQ</span></span>
+      </div>
+      <div class="landing-auth-buttons">
+        <button id="landing-login-btn" class="btn btn-outline">Sign In</button>
+        <button id="landing-demo-btn" class="btn btn-primary"><i data-lucide="sparkles"></i> Demo Mode</button>
+      </div>
+    </div>
+
+    <div class="landing-hero">
+      <div class="hero-content">
+        <span class="hero-badge"><i data-lucide="sparkles"></i> AI-Powered Ecological Tracking</span>
+        <h1>Shape a Greener Tomorrow with <span class="gradient-text">SustainIQ</span></h1>
+        <p>Analyze your carbon emissions in real-time, simulate lifestyle upgrades, compete in eco challenges, and unlock carbon forecasts powered by advanced intelligence.</p>
+        <div class="hero-ctas">
+          <button id="hero-get-started-btn" class="btn btn-primary btn-lg">Get Started Free</button>
+          <button id="hero-demo-btn" class="btn btn-outline btn-lg"><i data-lucide="play"></i> Explore Demo Mode</button>
+        </div>
+      </div>
+      <div class="hero-graphic">
+        <div class="glass-orb">
+          <div class="orb-content">
+            <i data-lucide="globe" class="orb-globe"></i>
+            <div class="orb-leaf"><i data-lucide="leaf"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Stats Grid on Landing Page -->
+    <div class="landing-stats-row">
+      <div class="l-stat">
+        <h2>1,425+ tons</h2>
+        <span>CO2 Saving Tracked</span>
+      </div>
+      <div class="l-stat">
+        <h2>64,810+</h2>
+        <span>Trees Planted Equiv.</span>
+      </div>
+      <div class="l-stat">
+        <h2>42,850+</h2>
+        <span>Eco-Tasks Finished</span>
+      </div>
+    </div>
+
+    <!-- Key Features section -->
+    <div class="landing-features">
+      <h2 class="section-title">Core AI-Powered Utilities</h2>
+      <div class="features-grid">
+        <div class="feature-card glass-panel">
+          <div class="icon-box"><i data-lucide="calculator"></i></div>
+          <h3>Smart Carbon Calculator</h3>
+          <p>Get a precise categories-breakdown of your transport, utility, diet, and waste footprint.</p>
+        </div>
+        <div class="feature-card glass-panel">
+          <div class="icon-box"><i data-lucide="sliders"></i></div>
+          <h3>Impact Sandbox Simulator</h3>
+          <p>Simulate lifestyle shifts (solar, EV, diet) and visually check your potential savings instantly.</p>
+        </div>
+        <div class="feature-card glass-panel">
+          <div class="icon-box"><i data-lucide="trending-up"></i></div>
+          <h3>Machine Forecasting</h3>
+          <p>Analyze 6-month historical carbon emission trends and forecast future offsets with recommendations.</p>
+        </div>
+        <div class="feature-card glass-panel">
+          <div class="icon-box"><i data-lucide="message-square"></i></div>
+          <h3>SustainAI Eco Coach</h3>
+          <p>Ask our natural conversational chatbot about zero-waste targets, recycling rules, and off-setting.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Landing Footer -->
+    <footer class="landing-footer">
+      <div class="footer-layout">
+        <div class="footer-about">
+          <div class="logo">
+            <i data-lucide="leaf" class="text-green"></i>
+            <span class="logo-text">Sustain<span>IQ</span></span>
+          </div>
+          <p>Empowering global climate awareness through interactive calculations and predictive models.</p>
+        </div>
+        <div class="footer-contact">
+          <h4>Contact Support</h4>
+          <p><i data-lucide="mail"></i> info@sustainiq.org</p>
+        </div>
+      </div>
+      <div class="copyright">&copy; 2026 SustainIQ Platform. All rights reserved.</div>
+    </footer>
+  </section>
+
+  <!-- AUTHENTICATION DIALOG (GLASS MODAL) -->
+  <div id="auth-modal" class="modal-overlay hidden">
+    <div class="auth-card glass-panel">
+      <button class="modal-close" id="auth-modal-close">&times;</button>
+      
+      <!-- Login View -->
+      <div id="auth-view-login">
+        <h2>Welcome Back</h2>
+        <p class="description-text">Enter credentials to resume tracking your carbon footprint.</p>
+        
+        <div class="form-group">
+          <label for="login-email">Email Address:</label>
+          <input type="email" id="login-email" class="form-control" placeholder="name@domain.com" value="judge@promptwars.com">
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password:</label>
+          <input type="password" id="login-password" class="form-control" placeholder="••••••••" value="sustain123">
+        </div>
+        
+        <button class="btn btn-primary btn-block" id="login-submit-btn">Sign In</button>
+        <button class="btn btn-outline btn-block" id="login-demo-btn"><i data-lucide="sparkles"></i> Bypass (Explore Guest Demo)</button>
+        
+        <div class="auth-toggles">
+          <a href="#" id="toggle-forgot-link">Forgot Password?</a>
+          <span>New? <a href="#" id="toggle-register-link">Create Account</a></span>
+        </div>
+      </div>
+
+      <!-- Register View -->
+      <div id="auth-view-register" class="hidden">
+        <h2>Create Eco Account</h2>
+        <p class="description-text">Join SustainIQ and start logging your sustainability score.</p>
+        
+        <div class="form-group">
+          <label for="register-name">Full Name:</label>
+          <input type="text" id="register-name" class="form-control" placeholder="Jane Doe">
+        </div>
+        <div class="form-group">
+          <label for="register-email">Email Address:</label>
+          <input type="email" id="register-email" class="form-control" placeholder="name@domain.com">
+        </div>
+        <div class="form-group">
+          <label for="register-password">Create Password:</label>
+          <input type="password" id="register-password" class="form-control" placeholder="Min 8 characters">
+        </div>
+        
+        <button class="btn btn-primary btn-block" id="register-submit-btn">Create Account</button>
+        
+        <div class="auth-toggles">
+          <span>Already have an account? <a href="#" id="toggle-login-link-2">Sign In</a></span>
+        </div>
+      </div>
+
+      <!-- Forgot Password View -->
+      <div id="auth-view-forgot" class="hidden">
+        <h2>Reset Password</h2>
+        <p class="description-text">Enter your registered email to receive a recovery links.</p>
+        
+        <div class="form-group">
+          <label for="forgot-email">Email Address:</label>
+          <input type="email" id="forgot-email" class="form-control" placeholder="name@domain.com">
+        </div>
+        
+        <button class="btn btn-primary btn-block" id="forgot-submit-btn">Send Recovery Link</button>
+        
+        <div class="auth-toggles">
+          <span>Return to <a href="#" id="toggle-login-link-3">Sign In</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Core JS Modules (script loaders) -->
+  <script src="js/app.js" defer></script>
+  <script src="js/calculator.js" defer></script>
+  <script src="js/simulator.js" defer></script>
+  <script src="js/chatbot.js" defer></script>
+  <script src="js/challenges.js" defer></script>
+  <script src="js/prediction.js" defer></script>
+  <script src="js/goals.js" defer></script>
+  <script src="js/leaderboard.js" defer></script>
+  <script src="js/learning.js" defer></script>
+  <script src="js/reports.js" defer></script>
+</body>
+</html>
