@@ -196,7 +196,7 @@ SustainIQ raises awareness around everyday habits. By visualizing footprint stat
 ---
 
 ## ✍️ Author
-👤 **Hyma Sri**
+👤 **Narala Hyma Sri**
 * **Role:** B.Tech Student | Data Analyst Aspirant
 * **Bio:** Passionate about data analytics, statistics, dashboard visualization, and building tools to solve real-world problems.
 * **Connect:** [LinkedIn](https://linkedin.com) | [GitHub](https://github.com)
