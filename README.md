@@ -67,10 +67,44 @@ Global carbon dioxide emissions remain at historic highs, driven substantially b
 
 ## 📸 Application Screenshots
 
-* **Landing Page Hero:**
-  ![Landing Page Placeholder](https://placehold.co/800x450/060a0a/00ff87?text=SustainIQ+Landing+Page+Hero)
-* **Interactive Dashboard Panel:**
-  ![Dashboard Placeholder](https://placehold.co/800x450/0c1412/06b6d4?text=SustainIQ+Dashboard+Overview)
+### 🏠 Landing Page
+![Landing Page](Screenshots/landing-page.png)
+
+### 📊 Dashboard Overview
+![Dashboard Overview](Screenshots/dashboard-overview.png)
+
+### 🏆 Dashboard Achievements
+![Dashboard Achievements](Screenshots/dashboard-achievements.png)
+
+### 🧮 Carbon Calculator
+![Carbon Calculator](Screenshots/carbon-calculator.png)
+
+### 🌱 Green Impact Simulator
+![Green Impact Simulator](Screenshots/green-impact-simulator.png)
+
+### 🤖 AI Sustainability Assistant
+![AI Assistant](Screenshots/ai-assistant.png)
+
+### 💬 AI Chat Interface
+![AI Chat Interface](Screenshots/ai-chat-interface.png)
+
+### 🎯 Eco Challenges
+![Eco Challenges](Screenshots/eco-challenges.png)
+
+### 📈 Carbon Emission Prediction
+![Carbon Prediction](Screenshots/carbon-prediction.png)
+
+### 🎯 Sustainability Goals
+![Sustainability Goals](Screenshots/sustainability-goals.png)
+
+### 🏅 Leaderboard
+![Leaderboard](Screenshots/leaderboard.png)
+
+### 📚 Sustainability Learning Hub
+![Learning Hub](Screenshots/learning-hub.png)
+
+### 📑 Reports & Analytics
+![Reports & Analytics](Screenshots/reports-analytics.png)
 
 ---
 
